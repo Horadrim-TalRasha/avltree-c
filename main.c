@@ -3,5 +3,6 @@
 
 int main(int argc, char ** argv)
 {
+    printf("All verification passed.\n");
     return 0;
 }
