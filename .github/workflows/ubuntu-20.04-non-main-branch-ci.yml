@@ -29,7 +29,6 @@ jobs:
 
       - name: Install tools
         run: |
-          sudo apt-get install -y lcov
           sudo apt-get install -y valgrind
 
       - name: Do make and verify
@@ -37,6 +36,9 @@ jobs:
 
       - name: generate coverage
         uses: zgosalvez/github-actions-report-lcov@v1
+        run: |
+          lcov -c -d ./ -o cover.info
+          lcov -a init.info -a cover.info -o total.info
         with:
           coverage-files: total.info
           minimum-coverage: 75
