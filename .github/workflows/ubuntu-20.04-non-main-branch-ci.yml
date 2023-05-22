@@ -29,6 +29,7 @@ jobs:
 
       - name: Install tools
         run: |
+          sudo apt-get install -y lcov
           sudo apt-get install -y valgrind
 
       - name: Do make and verify
