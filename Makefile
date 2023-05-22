@@ -17,12 +17,13 @@ GCOV_RESULTS := *.info
 all: $(LIB)
 
 test: $(BIN)
-	@valgrind --leak-check=full --show-reachable=yes -v ./$(BIN)
+	@valgrind --leak-check=full --show-reachable=yes -v ./$(BIN) 2>&1 | tee valgrind.log
+	@sh check_valgrind.sh
 	@lcov -c -d ./ -o cover.info
 	@lcov -a cover.info -o total.info
 
 clean:
-	@rm -rf $(OBJS) $(LIB) $(BIN) $(DEPS) $(GCOV_OBJS) $(GCOV_RESULTS)
+	@rm -rf $(OBJS) $(LIB) $(BIN) $(DEPS) $(GCOV_OBJS) $(GCOV_RESULTS) valgrind.log
 
 ifeq ($(MAKECMDGOALS),test)
 -include $(DEPS)
