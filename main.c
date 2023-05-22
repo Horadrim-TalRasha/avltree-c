@@ -15,6 +15,8 @@ int main(int argc, char ** argv)
     {
         printf("memory is running out.\n");
     }
+
+    free(newbie_test_avl_tree);
     printf("All verification passed.\n");
     return 0;
 }
