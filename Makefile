@@ -12,14 +12,17 @@ LIB_OBJS := $(OBJS:./main.o=)
 DEPS := $(SRC:./%.c=./%.d)
 LIB_DEPS := $(DEPS:./main.d=)
 GCOV_OBJS := *.gcov *.gcda *.gcno
+GCOV_RESULTS := *.info
 
 all: $(LIB)
 
 test: $(BIN)
-	@./$(BIN)
+	@valgrind --leak-check=full --show-reachable=yes -v ./$(BIN)
+	@lcov -c -d ./ -o cover.info
+	@lcov -a cover.info -o total.info
 
 clean:
-	@rm -rf $(OBJS) $(LIB) $(BIN) $(DEPS) $(GCOV_OBJS)
+	@rm -rf $(OBJS) $(LIB) $(BIN) $(DEPS) $(GCOV_OBJS) $(GCOV_RESULTS)
 
 ifeq ($(MAKECMDGOALS),test)
 -include $(DEPS)
